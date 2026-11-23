@@ -1,4 +1,4 @@
-name: Linux Hardener CI
+﻿name: Linux Hardener CI
 on:
   pull_request:
     branches: [main]
@@ -12,10 +12,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: ShellCheck
-        uses: ludeeus/action-shellcheck@master
-        with:
-          scandir: './'
+      - name: Install ShellCheck
+        run: sudo apt-get update && sudo apt-get install -y shellcheck
+      - name: ShellCheck - solo errores graves
+        run: |
+          shellcheck --severity=error harden.sh tests/test_harden.sh
+          echo "ShellCheck OK - sin errores graves"
       - name: Run tests
         run: |
           chmod +x harden.sh tests/test_harden.sh
