@@ -1,0 +1,4 @@
+backups/
+reports/*.md
+!reports/.gitkeep
+*.log
